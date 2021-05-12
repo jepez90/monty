@@ -8,7 +8,6 @@ typedef unsigned int uns;
 /*****************************************/
 /******* include standart libraries ******/
 /*****************************************/
-/* include standart libraries */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -50,29 +49,29 @@ typedef struct instruction_s
 		void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+
 /*****************************************/
 /*********** include Functions ***********/
 /*****************************************/
+
+/*------ monti.c ------*/
 void execute(stack_t **stack, char *optcode, uns line_number);
 
+/*------ file.c ------*/
 void open_file(FILE **file, char **argv);
 int read_file(FILE *file, char *optcode);
 
-
+/*------ optcode.c ------*/
 void push_optcode(stack_t **stack, uns line_number);
 void pall_optcode(stack_t **stack, uns line_number);
 void pint_optcode(stack_t **stack, uns line_number);
 void pop_optcode(stack_t **stack, uns line_number);
 
-
+/*------ stack.c ------*/
 size_t stack_print(const stack_t *h, int index);
 stack_t *stack_push(stack_t **head, const int n);
 int stack_pop(stack_t **head);
 void free_stack(stack_t *head);
-
-
-void copy_buffer(char *origin, char *dest);
-
 
 
 #endif

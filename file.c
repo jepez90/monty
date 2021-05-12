@@ -43,11 +43,13 @@ int read_file(FILE *file, char *optcode)
 		token = strtok(buffer, " \t\n");
 		if (token)
 		{
-			copy_buffer(token, optcode);
+			strcpy(optcode, token);
 
 			token = strtok(NULL, " \t\n");
-			copy_buffer(token, optcode_arg);
-
+			if (token)
+				strcpy(optcode_arg, token);
+			else
+				optcode_arg[0] = '\0';
 		}
 		else
 		{
