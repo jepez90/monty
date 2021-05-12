@@ -11,10 +11,15 @@ void copy_buffer(char *origin, char *dest)
 {
 	int i = 0;
 
-	if (origin != NULL)
-		for (; origin[i]; i++)
-			dest[i] = origin[i];
+	if (dest != NULL)
+	{
+		while (dest[i])
+			i++;
 
-	dest[i] = '\0';
+		if (origin != NULL)
+			for (; origin[i]; i++)
+				dest[i] = origin[i];
 
+		dest[i] = '\0';
+	}
 }

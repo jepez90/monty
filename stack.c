@@ -118,3 +118,24 @@ int stack_pop(stack_t **head)
 
 	return (-1);
 }
+
+
+/**
+ * free_stack - free the memory of the stack_t list.
+ * @head: pointer to the head of the double linked list.
+ *
+ * Return: nothing.
+ */
+void free_stack(stack_t *head)
+{
+	if (head)
+	{
+		while (head->next)
+		{
+			head = head->next;
+			free(head->prev);
+		}
+
+		free(head);
+	}
+}

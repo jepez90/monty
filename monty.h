@@ -4,6 +4,7 @@
 #define BUFFER_SIZE 512
 extern char *optcode_arg;
 typedef unsigned int uns;
+
 /*****************************************/
 /******* include standart libraries ******/
 /*****************************************/
@@ -55,7 +56,7 @@ typedef struct instruction_s
 void execute(stack_t **stack, char *optcode, uns line_number);
 
 void open_file(FILE **file, char **argv);
-int read_file(FILE *file, char *optcode, uns line_number);
+int read_file(FILE *file, char *optcode);
 
 
 void push_optcode(stack_t **stack, uns line_number);
@@ -67,6 +68,7 @@ void pop_optcode(stack_t **stack, uns line_number);
 size_t stack_print(const stack_t *h, int index);
 stack_t *stack_push(stack_t **head, const int n);
 int stack_pop(stack_t **head);
+void free_stack(stack_t *head);
 
 
 void copy_buffer(char *origin, char *dest);
