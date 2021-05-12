@@ -2,7 +2,7 @@
 #define MONTY
 
 #define BUFFER_SIZE 512
-extern char *optcode_arg;
+extern char optcode_arg[];
 typedef unsigned int uns;
 
 /*****************************************/

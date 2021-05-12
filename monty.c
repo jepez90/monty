@@ -1,6 +1,6 @@
 #include "monty.h"
 
-char *optcode_arg = NULL;
+char optcode_arg[BUFFER_SIZE] = {'\0'};
 
 /**
  * main - entry point of the program
@@ -15,7 +15,6 @@ int main(int argc, char **argv)
 	stack_t *stack = NULL;
 	FILE *file = NULL;
 	char optcode[BUFFER_SIZE] = {0};
-	char optcode_arg_buffer[BUFFER_SIZE] = {0};
 
 	if (argc != 2)
 	{
@@ -25,14 +24,13 @@ int main(int argc, char **argv)
 
 	open_file(&file, argv);
 
-	optcode_arg = optcode_arg_buffer;
 	while (++line_number)
 	{
 		bytes_read = read_file(file, optcode);
 		if (bytes_read == EOF)
 			break;
-		execute(&stack, optcode, line_number);
-
+		if (bytes_read != 0)
+			execute(&stack, optcode, line_number);
 	}
 	fclose(file);
 	free_stack(stack);
