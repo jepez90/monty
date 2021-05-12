@@ -1,6 +1,9 @@
 #ifndef MONTY
 #define MONTY
+
 #define BUFFER_SIZE 512
+extern char *optcode_arg;
+typedef unsigned int uns;
 /*****************************************/
 /******* include standart libraries ******/
 /*****************************************/
@@ -26,9 +29,9 @@
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+		int n;
+		struct stack_s *prev;
+		struct stack_s *next;
 } stack_t;
 
 
@@ -42,16 +45,32 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-        char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+		char *opcode;
+		void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /*****************************************/
 /*********** include Functions ***********/
 /*****************************************/
+void execute(stack_t **stack, char *optcode, uns line_number);
+
 void open_file(FILE **file, char **argv);
-int read_file(FILE *file, char *optcode, int *arg);
+int read_file(FILE *file, char *optcode, uns line_number);
+
+
+void push_optcode(stack_t **stack, uns line_number);
+void pall_optcode(stack_t **stack, uns line_number);
+void pint_optcode(stack_t **stack, uns line_number);
+void pop_optcode(stack_t **stack, uns line_number);
+
+
+size_t stack_print(const stack_t *h, int index);
+stack_t *stack_push(stack_t **head, const int n);
+int stack_pop(stack_t **head);
+
 
 void copy_buffer(char *origin, char *dest);
+
+
 
 #endif

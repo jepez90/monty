@@ -1,4 +1,7 @@
 #include "monty.h"
+char *optcode_arg = NULL;
+
+
 /**
  * main - entry point of the program
  * @argc: number of arguments pased to the program
@@ -7,25 +10,57 @@
  */
 int main(int argc, char **argv)
 {
-	int bytes_read = 0, arg;
-	stack_t stack;
+	int bytes_read = 0;
+	uns line_number = 0;
+	stack_t *stack = NULL;
 	FILE *file = NULL;
 	char optcode[BUFFER_SIZE] = {0};
+	char optcode_arg_buffer[BUFFER_SIZE] = {0};
 
 	if (argc != 2)
 	{
-		dprintf(STDERR_FILENO,"USAGE: monty file\n");
+		dprintf(STDERR_FILENO, "USAGE: monty file\n");
 		return (EXIT_FAILURE);
 	}
 
 	open_file(&file, argv);
 
-	bytes_read = read_file(file, optcode, &arg);
-	while (bytes_read != EOF)
+	optcode_arg = optcode_arg_buffer;
+	while (++line_number)
 	{
-		bytes_read = read_file(file, optcode, &arg);
+		bytes_read = read_file(file, optcode, line_number);
+		if (bytes_read == EOF)
+			break;
+		execute(&stack, optcode, line_number);
 	}
 	fclose(file);
 }
 
 
+/**
+ * execute - find the function that handle the optcode and execute it
+ * @stack: pointer to a doubly linked list representation of a stack
+ * @optcode: pointer to string that represent an optcode
+ * @line_number: int that represents the line read of the file
+ * Return: nothing
+ */
+void execute(stack_t **stack, char *optcode, uns line_number)
+{
+	int i = 0;
+	instruction_t instructions[] = {
+		{"push", push_optcode},
+		{"pall", pall_optcode},
+		{"pint", pint_optcode},
+		{"pop", pop_optcode},
+		{NULL, NULL}
+	};
+	for (; instructions[i].opcode != NULL; i++)
+		if (strcmp(instructions[i].opcode, optcode) == 0)
+		{
+			instructions[i].f(stack, line_number);
+			return;
+		}
+	dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n",
+														line_number, optcode);
+	exit(EXIT_FAILURE);
+}
