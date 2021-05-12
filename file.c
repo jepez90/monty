@@ -36,7 +36,7 @@ int read_file(FILE *file, char *optcode)
 	*optcode_arg = '\0';
 	/* Read one line of the file */
 	bytes_read = getline(&buffer_ptr, &bytes_to_read, file);
-	if (bytes_read > 0 )
+	if (bytes_read > 0)
 	{
 		/* if the read was valid */
 		/* tokenize the line */
