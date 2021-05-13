@@ -44,6 +44,7 @@ size_t stack_print(const stack_t *head, int index)
 	return (i);
 }
 
+
 /**
  * stack_push - adds a new node at the end of a stack_t list.
  * @head: pointer to the head of the double linked list.
@@ -89,6 +90,7 @@ stack_t *stack_push(stack_t **head, const int n)
 	return (new);
 }
 
+
 /**
  * stack_pop - remove at end of list.
  * @head: pointer to the head of the double linked list.
@@ -121,12 +123,12 @@ int stack_pop(stack_t **head)
 
 
 /**
- * free_stack - free the memory of the stack_t list.
+ * stack_free - free the memory of the stack_t list.
  * @head: pointer to the head of the double linked list.
  *
  * Return: nothing.
  */
-void free_stack(stack_t *head)
+void stack_free(stack_t *head)
 {
 	if (head)
 	{
@@ -138,4 +140,21 @@ void free_stack(stack_t *head)
 
 		free(head);
 	}
+}
+
+
+/**
+ * stack_get_top - Prints all the elements of a stack_t list.
+ * @head: pointer to the head of the double linked list.
+ * Return: last nodes
+ */
+stack_t *stack_get_top(stack_t *head)
+{
+	if (head == NULL)
+		return (NULL);
+
+	while (head->next)
+		head = head->next;
+
+	return (head);
 }

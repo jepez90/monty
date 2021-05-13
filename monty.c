@@ -1,6 +1,6 @@
 #include "monty.h"
 
-char optcode_arg[BUFFER_SIZE] = {'\0'};
+data_t data = {{'\0'}, {'\0'}};
 
 /**
  * main - entry point of the program
@@ -14,7 +14,6 @@ int main(int argc, char **argv)
 	uns line_number = 0;
 	stack_t *stack = NULL;
 	FILE *file = NULL;
-	char optcode[BUFFER_SIZE] = {0};
 
 	if (argc != 2)
 	{
@@ -26,42 +25,50 @@ int main(int argc, char **argv)
 
 	while (++line_number)
 	{
-		bytes_read = read_file(file, optcode);
+		bytes_read = read_file(file);
 		if (bytes_read == EOF)
 			break;
 		if (bytes_read != 0)
-			execute(&stack, optcode, line_number);
+			execute(&stack, line_number);
 	}
 	fclose(file);
-	free_stack(stack);
+	stack_free(stack);
 	return (EXIT_SUCCESS);
 }
 
 
 /**
- * execute - find the function that handle the optcode and execute it
+ * execute - find the function that handle the opcode and execute it
  * @stack: pointer to a doubly linked list representation of a stack
- * @optcode: pointer to string that represent an optcode
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void execute(stack_t **stack, char *optcode, uns line_number)
+void execute(stack_t **stack, uns line_number)
 {
 	int i = 0;
 	instruction_t instructions[] = {
-		{"push", push_optcode},
-		{"pall", pall_optcode},
-		{"pint", pint_optcode},
-		{"pop", pop_optcode},
+		{"push", handle_push},
+		{"pall", handle_pall},
+		{"pint", handle_pint},
+		{"pop", handle_pop},
+		{"swap", handle_swap},
+		{"add", handle_math},
+		{"sub", handle_math},
+		{"div", handle_math},
+		{"mul", handle_math},
+		{"mod", handle_math},
 		{NULL, NULL}
 	};
 	for (; instructions[i].opcode != NULL; i++)
-		if (strcmp(instructions[i].opcode, optcode) == 0)
+		if (strcmp(instructions[i].opcode, data.opcode) == 0)
 		{
 			instructions[i].f(stack, line_number);
 			return;
 		}
+	if (strcmp("nop", data.opcode) == 0 || data.opcode[0] == '#')
+		return;
+
 	dprintf(STDERR_FILENO, "L%d: unknown instruction %s\n",
-														line_number, optcode);
+												line_number, data.opcode);
 	exit(EXIT_FAILURE);
 }
