@@ -16,9 +16,11 @@
 /*****************************************/
 #define BUFFER_SIZE 512
 #define EMPTY_STACK_ERR "L%u: can't %s, stack empty\n"
+#define POP_ERR "L%u: can't %s an empty stack\n"
 #define OUT_OF_RANGE_ERR "L%u: can't %s, value out of range\n"
 #define SHORT_STACK_ERR "L%u: can't %s, stack too short\n"
 #define UNUSED __attribute__((unused))
+
 typedef unsigned int uns;
 
 
@@ -71,7 +73,12 @@ typedef struct data_s
 		char arg[BUFFER_SIZE];
 } data_t;
 
+
+/*****************************************/
+/******** define global variables ********/
+/*****************************************/
 extern data_t data;
+
 
 /*****************************************/
 /*********** include Functions ***********/

@@ -71,7 +71,7 @@ void handle_pop(stack_t **stack, unsigned int line_number)
 	/* try to remove the last node */
 	if (stack_pop(stack) == -1)
 	{
-		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
+		dprintf(STDERR_FILENO, POP_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
 }
