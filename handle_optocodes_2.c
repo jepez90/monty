@@ -91,7 +91,7 @@ void handle_pchar(stack_t **stack, unsigned int line_number)
 void handle_pstr(stack_t **stack, unsigned int line_number)
 {
 	stack_t *node;
-	char buffer[BUFFER_SIZE]= {'\0'};
+	char buffer[BUFFER_SIZE] = {'\0'};
 	int i = 0;
 
 	if (stack == NULL)
@@ -132,12 +132,11 @@ void handle_rotl(stack_t **stack, uns line_number UNUSED)
 		return;
 
 	/* insert the last node at begin of the stack */
-
+	last->next = (*stack);
+	(*stack)->prev = last;
 	last->prev->next = NULL;
 	last->prev = NULL;
-	(*stack)->prev = last;
-	last->next = (*stack);
-	stack = &last;
+	*stack = last;
 
 }
 
@@ -163,6 +162,6 @@ void handle_rotr(stack_t **stack, uns line_number UNUSED)
 	last->next = (*stack);
 	(*stack)->prev = last;
 	(*stack)->next->prev = NULL;
-	stack = &((*stack)->next);
+	*stack = (*stack)->next;
 	last->next->next = NULL;
 }
