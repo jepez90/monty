@@ -1,13 +1,6 @@
 #ifndef MONTY
 #define MONTY
 
-#define BUFFER_SIZE 512
-#define MATH_ERR "L%u: can't %s, stack too short\n"
-#define EMPTY_STACK_ERR "L%u: can't %s, stack empty\n"
-#define OUT_OF_RANGE_ERR "L%u: can't %s, value out of range\n"
-#define SHORT_STACK_ERR "L%u: can't %s, stack too short\n"
-typedef unsigned int uns;
-
 /*****************************************/
 /******* include standart libraries ******/
 /*****************************************/
@@ -17,8 +10,20 @@ typedef unsigned int uns;
 #include <fcntl.h> /* flags for open file */
 #include <string.h> /* strtok */
 
+
 /*****************************************/
-/************ include structs ************/
+/************* define macros *************/
+/*****************************************/
+#define BUFFER_SIZE 512
+#define EMPTY_STACK_ERR "L%u: can't %s, stack empty\n"
+#define OUT_OF_RANGE_ERR "L%u: can't %s, value out of range\n"
+#define SHORT_STACK_ERR "L%u: can't %s, stack too short\n"
+#define UNUSED __attribute__((unused))
+typedef unsigned int uns;
+
+
+/*****************************************/
+/************* define structs ************/
 /*****************************************/
 
 /**
@@ -89,7 +94,8 @@ void handle_swap(stack_t **stack, uns line_number);
 /*------ handle_optocodes_2.c ------*/
 void handle_math(stack_t **stack, uns line_number);
 void handle_pchar(stack_t **stack, uns line_number);
-void handle_pstr(stack_t **stack, unsigned int line_number);
+void handle_pstr(stack_t **stack, uns line_number);
+void handle_rotl(stack_t **stack, uns line_number);
 
 /*------ stack.c ------*/
 size_t stack_print(const stack_t *h, int index);

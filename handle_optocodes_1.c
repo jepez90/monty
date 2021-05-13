@@ -33,15 +33,13 @@ void handle_push(stack_t **stack, unsigned int line_number)
 /**
  * handle_pall - function that prints all stack
  * @stack: pointer to a doubly linked list representation of a stack
- * @line_number: int that represents the line read of the file
+ * @UNUSED: int that represents the line read of the file
  * Return: nothing
  */
-void handle_pall(stack_t **stack, unsigned int line_number)
+void handle_pall(stack_t **stack,  uns line_number UNUSED)
 {
 	/* print all number in the stack */
 	stack_print(*stack, 0);
-	/* this line avoid an error for unuser arg line_number */
-		line_number++;
 }
 
 

@@ -19,7 +19,7 @@ void handle_math(stack_t **stack, unsigned int line_number)
 	/* check for the stack's long */
 	if (last == NULL || last->prev == NULL)
 	{
-		dprintf(STDERR_FILENO, MATH_ERR, line_number, data.opcode);
+		dprintf(STDERR_FILENO, SHORT_STACK_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
 
@@ -107,4 +107,32 @@ void handle_pstr(stack_t **stack, unsigned int line_number)
 	}
 	printf("\n");
 	line_number++;
+}
+
+
+/**
+ * handle_rotl - function that prints the stack numbers as chars
+ * @stack: pointer to a doubly linked list representation of a stack
+ * @UNUSED: int that represents the line read of the file
+ * Return: nothing
+ */
+void handle_rotl(stack_t **stack, uns line_number UNUSED)
+{
+	stack_t *last = NULL;
+
+	/* get the last node */
+	last = stack_get_top(*stack);
+
+	/* check if the stack is empty or its length is 1 */
+	if (last == NULL || last == *stack)
+		return;
+
+	/* insert the last node at begin of the stack */
+
+	last->prev->next = NULL;
+	last->prev = NULL;
+	(*stack)->prev = last;
+	last->next = (*stack);
+	stack = &last;
+
 }

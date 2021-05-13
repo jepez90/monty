@@ -59,6 +59,7 @@ void execute(stack_t **stack, uns line_number)
 		{"mod", handle_math},
 		{"pchar", handle_pchar},
 		{"pstr", handle_pstr},
+		{"rotl", handle_rotl},
 		{NULL, NULL}
 	};
 	for (; instructions[i].opcode != NULL; i++)
