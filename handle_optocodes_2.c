@@ -11,43 +11,100 @@
 void handle_math(stack_t **stack, unsigned int line_number)
 {
 	stack_t *last = NULL;
+	char letter0;
 
 	/* get the last node */
 	last = stack_get_top(*stack);
+
+	/* check for the stack's long */
 	if (last == NULL || last->prev == NULL)
-	{	/* if doesn't exist the last node or its prev */
-		dprintf(STDERR_FILENO, "L%u: can't %s, stack too short\n",
-													line_number, data.opcode);
+	{
+		dprintf(STDERR_FILENO, MATH_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
+
+	/* letter0 = a:add, s:sub, d:div, m:mul, o:mod */
+	letter0 = data.opcode[0];
+	if (data.opcode[0] == 'm' && data.opcode[1] == 'o')
+		letter0 = 'o';
+
+	/*check for division by zero error*/
+	if ((letter0 == 'd' || letter0 == 'o') && last->n == 0)
+	{
+		dprintf(STDERR_FILENO, "L%u: division by zero\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
 	/* make the operation with the numbers */
-	if (data.opcode[0] == 'a') /* add */
+	if (letter0 == 'a') /* add */
 		last->prev->n += last->n;
-	else if (data.opcode[0] == 's')/* sub */
+	else if (letter0 == 's')/* sub */
 		last->prev->n -= last->n;
-	else if (data.opcode[0] == 'd')/* div */
-	{
-		if (last->n == 0)
-		{
-			dprintf(STDERR_FILENO, "L%u: division by zero\n", line_number);
-			exit(EXIT_FAILURE);
-		}
-		else
-			last->prev->n /= last->n;
-	}
-	else if (data.opcode[0] == 'm' && data.opcode[1] == 'u')/* mul */
+	else if (letter0 == 'd')/* div */
+		last->prev->n /= last->n;
+	else if (letter0 == 'm')/* mul */
 		last->prev->n *= last->n;
-	else if (data.opcode[0] == 'm' && data.opcode[1] == 'o')/* mod */
-	{
-		if (last->n == 0)
-		{
-			dprintf(STDERR_FILENO, "L%u: division by zero\n", line_number);
-			exit(EXIT_FAILURE);
-		}
-		else
-			last->prev->n %= last->n;
-	}
+	else if (letter0 == 'o')/* mod */
+		last->prev->n %= last->n;
+
 	/* remove the last node */
 	last->prev->next = NULL;
 	free(last);
+}
+
+
+/**
+ * handle_pchar - function that print a int as char
+ * @stack: pointer to a doubly linked list representation of a stack
+ * @line_number: int that represents the line read of the file
+ * Return: nothing
+ */
+void handle_pchar(stack_t **stack, unsigned int line_number)
+{
+	stack_t *last = NULL;
+
+	/* get the last node */
+	last = stack_get_top(*stack);
+
+	if (last == NULL)
+	{
+		/* if doesn't exist the last  */
+		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
+		exit(EXIT_FAILURE);
+	}
+	/* check if n is a valid char */
+	if (last->n < 1 || last->n > 126)
+	{
+		dprintf(STDERR_FILENO, OUT_OF_RANGE_ERR, line_number, data.opcode);
+		exit(EXIT_FAILURE);
+	}
+	printf("%c\n", last->n);
+}
+
+
+/**
+ * handle_pstr - function that prints the stack numbers as chars
+ * @stack: pointer to a doubly linked list representation of a stack
+ * @line_number: int that represents the line read of the file
+ * Return: nothing
+ */
+void handle_pstr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *head = *stack;
+
+	if (stack == NULL)
+		printf("\n");
+
+	while (head->next)
+		head = head->next;
+
+	while (head)
+	{
+		if (head->n < 1 || head->n > 126)
+			break;
+		printf("%c", head->n);
+		head = head->prev;
+	}
+	printf("\n");
+	line_number++;
 }

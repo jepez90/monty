@@ -57,6 +57,8 @@ void execute(stack_t **stack, uns line_number)
 		{"div", handle_math},
 		{"mul", handle_math},
 		{"mod", handle_math},
+		{"pchar", handle_pchar},
+		{"pstr", handle_pstr},
 		{NULL, NULL}
 	};
 	for (; instructions[i].opcode != NULL; i++)

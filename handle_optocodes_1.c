@@ -56,7 +56,7 @@ void handle_pint(stack_t **stack, unsigned int line_number)
 	/* try to print the last node */
 	if (stack_print(*stack, -1) == 0)
 	{
-		dprintf(STDERR_FILENO, "L%u: can't pint, stack empty\n", line_number);
+		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -73,7 +73,7 @@ void handle_pop(stack_t **stack, unsigned int line_number)
 	/* try to remove the last node */
 	if (stack_pop(stack) == -1)
 	{
-		dprintf(STDERR_FILENO, "L%u: can't pop an empty stack\n", line_number);
+		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -95,7 +95,7 @@ void handle_swap(stack_t **stack, unsigned int line_number)
 	if (last == NULL || last->prev == NULL)
 	{
 		/* if doesn't exist the last node or its prev */
-		dprintf(STDERR_FILENO, "L%u: can't swap, stack too short\n", line_number);
+		dprintf(STDERR_FILENO, SHORT_STACK_ERR, line_number, data.opcode);
 		exit(EXIT_FAILURE);
 	}
 
