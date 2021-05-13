@@ -90,22 +90,26 @@ void handle_pchar(stack_t **stack, unsigned int line_number)
  */
 void handle_pstr(stack_t **stack, unsigned int line_number)
 {
-	stack_t *head = *stack;
+	stack_t *node;
+	char buffer[BUFFER_SIZE]= {'\0'};
+	int i = 0;
 
 	if (stack == NULL)
 		printf("\n");
 
-	while (head->next)
-		head = head->next;
+	/* get the last node */
+	node = stack_get_top(*stack);
 
-	while (head)
+	/* iterate the list since the last node*/
+	while (node)
 	{
-		if (head->n < 1 || head->n > 126)
+		if (node->n <= 32 || node->n > 126)
 			break;
-		printf("%c", head->n);
-		head = head->prev;
+		buffer[i++] = node->n;
+		node = node->prev;
 	}
-	printf("\n");
+	buffer[i++] = '\n';
+	printf("%s", buffer);
 	line_number++;
 }
 
