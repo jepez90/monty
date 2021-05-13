@@ -83,7 +83,7 @@ void handle_pchar(stack_t **stack, unsigned int line_number)
 
 
 /**
- * handle_pstr - function that prints the stack numbers as chars
+ * handle_pstr - function that prints all stack numbers as chars
  * @stack: pointer to a doubly linked list representation of a stack
  * @line_number: int that represents the line read of the file
  * Return: nothing
@@ -111,7 +111,7 @@ void handle_pstr(stack_t **stack, unsigned int line_number)
 
 
 /**
- * handle_rotl - function that prints the stack numbers as chars
+ * handle_rotl - function that rotate the stack to up
  * @stack: pointer to a doubly linked list representation of a stack
  * @UNUSED: int that represents the line read of the file
  * Return: nothing
@@ -135,4 +135,30 @@ void handle_rotl(stack_t **stack, uns line_number UNUSED)
 	last->next = (*stack);
 	stack = &last;
 
+}
+
+
+/**
+ * handle_rotr - function that rotate the stack to down
+ * @stack: pointer to a doubly linked list representation of a stack
+ * @UNUSED: int that represents the line read of the file
+ * Return: nothing
+ */
+void handle_rotr(stack_t **stack, uns line_number UNUSED)
+{
+	stack_t *last = NULL;
+
+	/* get the last node */
+	last = stack_get_top(*stack);
+
+	/* check if the stack is empty or its length is 1 */
+	if (last == NULL || last == *stack)
+		return;
+
+	/* insert the first node at end of the stack */
+	last->next = (*stack);
+	(*stack)->prev = last;
+	(*stack)->next->prev = NULL;
+	stack = &((*stack)->next);
+	last->next->next = NULL;
 }

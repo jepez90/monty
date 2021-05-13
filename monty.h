@@ -96,6 +96,7 @@ void handle_math(stack_t **stack, uns line_number);
 void handle_pchar(stack_t **stack, uns line_number);
 void handle_pstr(stack_t **stack, uns line_number);
 void handle_rotl(stack_t **stack, uns line_number);
+void handle_rotr(stack_t **stack, uns line_number);
 
 /*------ stack.c ------*/
 size_t stack_print(const stack_t *h, int index);
