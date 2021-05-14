@@ -42,28 +42,29 @@ execute with:
 ```$ ./monty filename```
 where filename is an file with the optcodes.
 The monty optcodes that this program hande are:
-***push _number_:** put the number in the stack or queue.
-***pall:** prints the stack.
-***pint:** prints the number in the top of the stack
-***pop:** remove the top numer in the stack.
-***swap:** swap the last two numbers.
-***nop:** doesn’t do anything.
-***add:** adds the last two numbers in the secont last number and remove the last.
-***sub:** sub the last two numbers in the secont last number and remove the last.
-***div:** divide the last two numbers in the secont last number and remove the last.
-***mul:** multiply the last two numbers in the secont last number and remove the last.
-***mod:** obtain the mod of last two numbers in the secont last number and remove the last.
-***pchar:** print the last number as ASCII char.
-***pstr:** print all numbers as ASCII char.
-***rotl:** rotate the stack to the top
-***rotr:** rotate the stack to the base
-***queue:** change the behavior of the list to FIFO.
-***stack:** change the behavior of the list to LIFO.
-***#:** ignore the line (as a comment).
+
+* **push _number_:** put the number in the stack or queue.
+* **pall:** prints the stack.
+* **pint:** prints the number in the top of the stack
+* **pop:** remove the top numer in the stack.
+* **swap:** swap the last two numbers.
+* **nop:** doesn’t do anything.
+* **add:** adds the last two numbers in the secont last number and remove the last.
+* **sub:** sub the last two numbers in the secont last number and remove the last.
+* **div:** divide the last two numbers in the secont last number and remove the last.
+* **mul:** multiply the last two numbers in the secont last number and remove the last.
+* **mod:** obtain the mod of last two numbers in the secont last number and remove the last.
+* **pchar:** print the last number as ASCII char.
+* **pstr:** print all numbers as ASCII char.
+* **rotl:** rotate the stack to the top
+* **rotr:** rotate the stack to the base
+* **queue:** change the behavior of the list to FIFO.
+* **stack:** change the behavior of the list to LIFO.
+* **#:** ignore the line (as a comment).
 
 ## Example:
-test01.m
-```push 64
+```$ cat test01.m
+push 64
 push 65
 push 66
 push 67
@@ -84,10 +85,8 @@ rotr
 pstr
 rotr
 pstr
-#add```
-
-
-```$ ./monty test01.m
+#add
+$ ./monty test01.m
 68
 67
 66
