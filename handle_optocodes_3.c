@@ -9,6 +9,7 @@
  */
 void handle_stack(stack_t **stack UNUSED, uns line_number UNUSED)
 {
+	/* set the vehavior */
 	data.vehavior = STACK;
 }
 
@@ -21,5 +22,6 @@ void handle_stack(stack_t **stack UNUSED, uns line_number UNUSED)
  */
 void handle_queue(stack_t **stack UNUSED, uns line_number UNUSED)
 {
+	/* set the vehavior */
 	data.vehavior = QUEUE;
 }

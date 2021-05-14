@@ -19,11 +19,12 @@
 #define POP_ERR "L%u: can't %s an empty stack\n"
 #define OUT_OF_RANGE_ERR "L%u: can't %s, value out of range\n"
 #define SHORT_STACK_ERR "L%u: can't %s, stack too short\n"
+#define NO_OPTCODE_ERR "L%d: unknown instruction %s\n"
 #define UNUSED __attribute__((unused))
 
 typedef unsigned int uns;
-
 typedef enum type_list_enum {STACK, QUEUE} type_list;
+
 
 /*****************************************/
 /************* define structs ************/
@@ -73,6 +74,7 @@ typedef struct data_s
 		char opcode[BUFFER_SIZE];
 		char arg[BUFFER_SIZE];
 		type_list vehavior;
+		FILE *file;
 } data_t;
 
 
@@ -88,6 +90,7 @@ extern data_t data;
 
 /*------------ monty.c ------------*/
 void execute(stack_t **stack, uns line_number);
+void safe_exit(stack_t **stack, int status);
 
 /*------------ file.c ------------*/
 void open_file(FILE **file, char **argv);

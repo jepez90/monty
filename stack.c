@@ -15,9 +15,10 @@ size_t stack_print(const stack_t *head, int index)
 	if (head == NULL)
 		return (i);
 
+	/* travers the stack to the last node */
 	while (head->next)
-	{
-		if (index > 0 && index == ++j)
+	{	/* print the node at given positive index */
+		if (index == ++j)
 		{
 			printf("%d\n", head->n);
 			return (1);
@@ -25,9 +26,11 @@ size_t stack_print(const stack_t *head, int index)
 		head = head->next;
 	}
 
+	/* travers the stack to the first node */
 	j = 0;
 	while (head)
-	{
+	{	/* if an negative index is given, print the node at this position */
+		/* instead print all nodes */
 		if (index < 0)
 		{
 			if (index == --j)
@@ -66,13 +69,13 @@ stack_t *stack_push(stack_t **head, const int n)
 	if (new == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		safe_exit(head, EXIT_FAILURE);
 	}
 
 	new->next = NULL;
 	new->n = n;
 
-	/* insert the new node */
+	/* insert the new node at end */
 	if (current)
 	{
 		/* look for the last node */
@@ -83,7 +86,7 @@ stack_t *stack_push(stack_t **head, const int n)
 		new->prev = current;
 	}
 	else
-	{
+	{	/* it is the fist node */
 		new->prev = NULL;
 		*head = new;
 	}
@@ -99,26 +102,22 @@ stack_t *stack_push(stack_t **head, const int n)
  */
 int stack_pop(stack_t **head)
 {
-	stack_t *current = *head;
+	stack_t *last;
 
 	if (head == NULL || *head == NULL)
 		return (-1);
 
-	while (current->next)
-		current = current->next;
+	/* get the last node */
+	last = stack_get_top(*head);
 
-	if (current)
-	{
-		if (current->prev)
-			current->prev->next = NULL;
-		else
-			*head = NULL;
+	/* remove the last node */
+	if (last->prev)
+		last->prev->next = NULL;
+	else
+		*head = NULL;
+	free(last);
 
-		free(current);
-		return (1);
-	}
-
-	return (-1);
+	return (1);
 }
 
 
@@ -134,6 +133,7 @@ void stack_free(stack_t *head)
 	{
 		while (head->next)
 		{
+			/* free each prev node */
 			head = head->next;
 			free(head->prev);
 		}

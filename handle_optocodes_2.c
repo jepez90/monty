@@ -20,7 +20,7 @@ void handle_math(stack_t **stack, uns line_number)
 	if (last == NULL || last->prev == NULL)
 	{
 		dprintf(STDERR_FILENO, SHORT_STACK_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 
 	/* letter0 = a:add, s:sub, d:div, m:mul, o:mod */
@@ -32,7 +32,7 @@ void handle_math(stack_t **stack, uns line_number)
 	if ((letter0 == 'd' || letter0 == 'o') && last->n == 0)
 	{
 		dprintf(STDERR_FILENO, "L%u: division by zero\n", line_number);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 
 	/* make the operation with the numbers */
@@ -70,13 +70,13 @@ void handle_pchar(stack_t **stack, uns line_number)
 	{
 		/* if doesn't exist the last  */
 		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 	/* check if n is a valid char */
 	if (last->n < 1 || last->n > 126)
 	{
 		dprintf(STDERR_FILENO, OUT_OF_RANGE_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 	printf("%c\n", last->n);
 }
@@ -100,14 +100,18 @@ void handle_pstr(stack_t **stack, uns line_number)
 	/* get the last node */
 	node = stack_get_top(*stack);
 
-	/* iterate the list since the last node*/
+	/* iterate the list since the last node and copy each number in buffer */
 	while (node)
 	{
+		/* if is not a printable char */
 		if (node->n <= 32 || node->n > 126)
 			break;
+
 		buffer[i++] = node->n;
 		node = node->prev;
 	}
+
+	/* prints the buffer */
 	buffer[i++] = '\n';
 	printf("%s", buffer);
 	line_number++;
@@ -131,7 +135,7 @@ void handle_rotl(stack_t **stack, uns line_number UNUSED)
 	if (last == NULL || last == *stack)
 		return;
 
-	/* insert the last node at begin of the stack */
+	/* move the last node at begin of the stack */
 	last->next = (*stack);
 	(*stack)->prev = last;
 	last->prev->next = NULL;
@@ -158,7 +162,7 @@ void handle_rotr(stack_t **stack, uns line_number UNUSED)
 	if (last == NULL || last == *stack)
 		return;
 
-	/* insert the first node at end of the stack */
+	/* move the first node at end of the stack */
 	last->next = (*stack);
 	(*stack)->prev = last;
 	(*stack)->next->prev = NULL;

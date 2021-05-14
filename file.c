@@ -9,6 +9,7 @@
  */
 void open_file(FILE **file, char **argv)
 {
+	/* open the file */
 	*file = fopen(argv[1], "r");
 	if (*file == NULL)
 	{
@@ -38,7 +39,7 @@ int read_file(FILE *file)
 	if (bytes_read > 0)
 	{
 		/* if the read was valid */
-		/* tokenize the line */
+		/* obtain the first tow tokens */
 		token = strtok(buffer, " \t\n");
 		if (token)
 		{
@@ -51,7 +52,7 @@ int read_file(FILE *file)
 				data.arg[0] = '\0';
 		}
 		else
-		{
+		{	/* if the first token is NULL, optcode = "" */
 			data.opcode[0] = '\0';
 			return (0);
 		}

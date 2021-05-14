@@ -22,7 +22,7 @@ void handle_push(stack_t **stack, uns line_number)
 	if (i == 0)
 	{
 		dprintf(STDERR_FILENO, "L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 
 	/* put the number in the stack */
@@ -58,7 +58,7 @@ void handle_pint(stack_t **stack, uns line_number)
 	if (stack_print(*stack, -1) == 0)
 	{
 		dprintf(STDERR_FILENO, EMPTY_STACK_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 }
 
@@ -75,7 +75,7 @@ void handle_pop(stack_t **stack, uns line_number)
 	if (stack_pop(stack) == -1)
 	{
 		dprintf(STDERR_FILENO, POP_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 }
 
@@ -97,7 +97,7 @@ void handle_swap(stack_t **stack, uns line_number)
 	{
 		/* if doesn't exist the last node or its prev */
 		dprintf(STDERR_FILENO, SHORT_STACK_ERR, line_number, data.opcode);
-		exit(EXIT_FAILURE);
+		safe_exit(stack, EXIT_FAILURE);
 	}
 
 	/* swap only the numbers */

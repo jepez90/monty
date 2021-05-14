@@ -10,7 +10,7 @@
  */
 stack_t *queue_enqueue(stack_t **head, const int n)
 {
-	stack_t *new, *first = NULL;
+	stack_t *new;
 
 	if (head == NULL)
 		return (NULL);
@@ -20,20 +20,17 @@ stack_t *queue_enqueue(stack_t **head, const int n)
 	if (new == NULL)
 	{
 		dprintf(STDERR_FILENO, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		safe_exit(head, EXIT_FAILURE);
 	}
 	new->prev = NULL;
 	new->n = n;
 
-	/* insert the new node */
-	first = *head;
-
-	if (first)
+	/* insert the new node as firt node */
+	if (*head)
 	{
-		new->next = first;
-		first->prev = new;
+		new->next = *head;
+		(*head)->prev = new;
 	}
-
 	*head = new;
 
 	return (new);
