@@ -1,6 +1,6 @@
 #include "monty.h"
 
-data_t data = {{'\0'}, {'\0'}};
+data_t data = {{'\0'}, {'\0'}, STACK};
 
 /**
  * main - entry point of the program
@@ -61,6 +61,8 @@ void execute(stack_t **stack, uns line_number)
 		{"pstr", handle_pstr},
 		{"rotl", handle_rotl},
 		{"rotr", handle_rotr},
+		{"queue", handle_queue},
+		{"stack", handle_stack},
 		{NULL, NULL}
 	};
 	for (; instructions[i].opcode != NULL; i++)

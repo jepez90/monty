@@ -23,6 +23,7 @@
 
 typedef unsigned int uns;
 
+typedef enum type_list_enum {STACK, QUEUE} type_list;
 
 /*****************************************/
 /************* define structs ************/
@@ -71,6 +72,7 @@ typedef struct data_s
 {
 		char opcode[BUFFER_SIZE];
 		char arg[BUFFER_SIZE];
+		type_list vehavior;
 } data_t;
 
 
@@ -84,33 +86,40 @@ extern data_t data;
 /*********** include Functions ***********/
 /*****************************************/
 
-/*------ monty.c ------*/
+/*------------ monty.c ------------*/
 void execute(stack_t **stack, uns line_number);
 
-/*------ file.c ------*/
+/*------------ file.c ------------*/
 void open_file(FILE **file, char **argv);
 int read_file(FILE *file);
 
-/*------ handle_optocodes_1.c ------*/
+/*------------ handle_optocodes_1.c ------------*/
 void handle_push(stack_t **stack, uns line_number);
 void handle_pall(stack_t **stack, uns line_number);
 void handle_pint(stack_t **stack, uns line_number);
 void handle_pop(stack_t **stack, uns line_number);
 void handle_swap(stack_t **stack, uns line_number);
 
-/*------ handle_optocodes_2.c ------*/
+/*------------ handle_optocodes_2.c ------------*/
 void handle_math(stack_t **stack, uns line_number);
 void handle_pchar(stack_t **stack, uns line_number);
 void handle_pstr(stack_t **stack, uns line_number);
 void handle_rotl(stack_t **stack, uns line_number);
 void handle_rotr(stack_t **stack, uns line_number);
 
-/*------ stack.c ------*/
+/*------------ handle_optocodes_3.c ------------*/
+void handle_queue(stack_t **stack UNUSED, uns line_number UNUSED);
+void handle_stack(stack_t **stack UNUSED, uns line_number UNUSED);
+
+/*------------ stack.c ------------*/
 size_t stack_print(const stack_t *h, int index);
 stack_t *stack_push(stack_t **head, const int n);
 int stack_pop(stack_t **head);
 void stack_free(stack_t *head);
 stack_t *stack_get_top(stack_t *head);
+
+/*------------ queue.c ------------*/
+stack_t *queue_enqueue(stack_t **head, const int n);
 
 
 #endif

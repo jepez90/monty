@@ -8,7 +8,7 @@
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_math(stack_t **stack, unsigned int line_number)
+void handle_math(stack_t **stack, uns line_number)
 {
 	stack_t *last = NULL;
 	char letter0;
@@ -59,7 +59,7 @@ void handle_math(stack_t **stack, unsigned int line_number)
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_pchar(stack_t **stack, unsigned int line_number)
+void handle_pchar(stack_t **stack, uns line_number)
 {
 	stack_t *last = NULL;
 
@@ -88,7 +88,7 @@ void handle_pchar(stack_t **stack, unsigned int line_number)
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_pstr(stack_t **stack, unsigned int line_number)
+void handle_pstr(stack_t **stack, uns line_number)
 {
 	stack_t *node;
 	char buffer[BUFFER_SIZE] = {'\0'};

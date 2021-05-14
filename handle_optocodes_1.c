@@ -7,7 +7,7 @@
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_push(stack_t **stack, unsigned int line_number)
+void handle_push(stack_t **stack, uns line_number)
 {
 	int i = 0;
 	char test;
@@ -26,7 +26,10 @@ void handle_push(stack_t **stack, unsigned int line_number)
 	}
 
 	/* put the number in the stack */
-	stack_push(stack, atoi(data.arg));
+	if (data.vehavior == QUEUE)
+		queue_enqueue(stack, atoi(data.arg));
+	else
+		stack_push(stack, atoi(data.arg));
 }
 
 
@@ -49,7 +52,7 @@ void handle_pall(stack_t **stack,  uns line_number UNUSED)
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_pint(stack_t **stack, unsigned int line_number)
+void handle_pint(stack_t **stack, uns line_number)
 {
 	/* try to print the last node */
 	if (stack_print(*stack, -1) == 0)
@@ -66,7 +69,7 @@ void handle_pint(stack_t **stack, unsigned int line_number)
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_pop(stack_t **stack, unsigned int line_number)
+void handle_pop(stack_t **stack, uns line_number)
 {
 	/* try to remove the last node */
 	if (stack_pop(stack) == -1)
@@ -82,7 +85,7 @@ void handle_pop(stack_t **stack, unsigned int line_number)
  * @line_number: int that represents the line read of the file
  * Return: nothing
  */
-void handle_swap(stack_t **stack, unsigned int line_number)
+void handle_swap(stack_t **stack, uns line_number)
 {
 	stack_t *last = NULL;
 	int hold;
